@@ -39,9 +39,9 @@ class ProblemController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show(Request $request): Response
     {
-        return Inertia::render('Problem/partials/ProblemShow');
+        return Inertia::render('Problem/Partials/ShowProblem');
     }
 
     /**
