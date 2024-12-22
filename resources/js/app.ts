@@ -17,11 +17,12 @@ import Divider from "primevue/divider";
 import Card from "primevue/card";
 import { Link } from "@inertiajs/vue3";
 import ToastService from "primevue/toastservice";
+import Popover from "primevue/popover";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
 createInertiaApp({
-    title: (title) => `${title} | ${appName}`,
+    title: (title) => `${title} - ${appName}`,
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.vue`,
@@ -37,6 +38,7 @@ createInertiaApp({
             .component("Divider", Divider)
             .component("Card", Card)
             .component("Link", Link)
+            .component("Popover", Popover)
             .use(ToastService)
             .use(PrimeVue, {
                 theme: {

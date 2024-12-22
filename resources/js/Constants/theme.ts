@@ -30,10 +30,8 @@ export const MyPreset = definePreset(Aura, {
                 color: "var(--text-secondary)",
             },
         },
-        toast: {
-            error: {
-                background: "var(--toast-error-background)",
-            },
+        popover: {
+            background: "var(--card-background)",
         },
     },
 });
