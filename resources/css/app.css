@@ -1,3 +1,35 @@
+@import "primeicons/primeicons.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :root {
+        /* root background */
+        --ground-background: #16161d;
+
+        /* text-color */
+        --text-primary: #e8e6e6;
+        --text-secondary: #97979b;
+
+        /* Card  */
+        --card-background: #2c2c34;
+
+        /* inputtext */
+        --inputtext-background: #16161d;
+
+        /* button */
+        --button-outlined-primary-border-color: #ffff;
+
+        /* toast */
+
+        --toast-error-background: #ffff;
+    }
+}
+
+@layer base {
+    html {
+        background: var(--ground-background);
+    }
+}

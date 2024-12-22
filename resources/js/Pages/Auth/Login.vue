@@ -1,98 +1,128 @@
 <script setup lang="ts">
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import AuthLayout from "@/Layouts/AuthLayout.vue";
+import { Head, useForm } from "@inertiajs/vue3";
+import { useToast } from "primevue/usetoast";
+import { LOGIN_CREDENTIALS_DEFAULT } from "./defaults/credentials";
+import { AuthCredentialsTypes } from "./types/usertypes";
 
-defineProps<{
-    canResetPassword?: boolean;
-    status?: string;
-}>();
-
-const form = useForm({
-    email: '',
-    password: '',
-    remember: false,
+defineProps({
+    canResetPassword: Boolean,
+    status: String,
 });
 
-const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => {
-            form.reset('password');
+const toast = useToast();
+const form = useForm<AuthCredentialsTypes>({ ...LOGIN_CREDENTIALS_DEFAULT });
+
+const submit = (): void => {
+    form.post(route("login"), {
+        onError: (error) => {
+            Object.values(error).forEach((message) => {
+                toast.add({
+                    severity: "error",
+                    summary: "Error",
+                    detail: message,
+                });
+            });
         },
+        onSuccess: () => form.reset("password"),
     });
 };
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Log in" />
+    <Head title="Login" />
 
-        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
-            {{ status }}
-        </div>
-
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4 block">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600"
-                        >Remember me</span
+    <AuthLayout>
+        <template #title>Login to CodeGym</template>
+        <template #form>
+            <form class="flex-column mt-5" @submit.prevent="submit">
+                <div class="flex-column">
+                    <label for="email" class="text-[var(--text-secondary)]">
+                        Email
+                    </label>
+                    <InputText
+                        id="email"
+                        aria-describedby="email-help"
+                        v-model="form.email"
+                    />
+                </div>
+                <div class="flex-column">
+                    <label for="password" class="text-[var(--text-secondary)]">
+                        Password
+                    </label>
+                    <Password
+                        id="password"
+                        toggleMask
+                        fluid
+                        v-model="form.password"
+                        :feedback="false"
+                    />
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <Checkbox
+                            id="remember"
+                            binary
+                            variant="filled"
+                            v-model="form.remember"
+                        />
+                        <label for="remember"> Remember me </label>
+                    </div>
+                    <Link
+                        v-if="canResetPassword"
+                        :href="route('password.request')"
                     >
-                </label>
+                        <Button label="Forgot password?" variant="link" />
+                    </Link>
+                </div>
+                <Button
+                    type="submit"
+                    label="Log in"
+                    :disabled="
+                        form.email.length == 0 ||
+                        form.password.length == 0 ||
+                        form.processing
+                    "
+                />
+            </form>
+            <Divider align="center">
+                <small> OR </small>
+            </Divider>
+            <div class="flex-column">
+                <Button
+                    icon="pi pi-github"
+                    label="Login with Github"
+                    variant="outlined"
+                    class="!border-gray-50/40 !text-gray-50"
+                />
+                <Button
+                    icon="pi pi-google"
+                    label="Login with Google"
+                    variant="outlined"
+                    class="!border-gray-50/40 !text-gray-50"
+                />
             </div>
-
-            <div class="mt-4 flex items-center justify-end">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    Forgot your password?
+        </template>
+        <template #footer>
+            <div class="mt-8 text-[var(--text-secondary)]">
+                New to CodeGym?
+                <Link :href="route('register')">
+                    <Button
+                        icon="pi pi-arrow-right"
+                        label="Create account"
+                        variant="link"
+                        class="flex-row-reverse !p-0"
+                    />
                 </Link>
-
-                <PrimaryButton
-                    class="ms-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Log in
-                </PrimaryButton>
             </div>
-        </form>
-    </GuestLayout>
+        </template>
+    </AuthLayout>
 </template>
+
+<style scoped>
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+</style>
