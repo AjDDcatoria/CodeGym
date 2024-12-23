@@ -33,5 +33,8 @@ export const MyPreset = definePreset(Aura, {
         popover: {
             background: "var(--card-background)",
         },
+        select: {
+            background : "var(--card-background)",
+        }
     },
 });

@@ -11,6 +11,9 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
+        <script src="https://unpkg.com/vue"></script>
+        <script src="https://unpkg.com/splitpanes"></script>
+        <link href="https://unpkg.com/splitpanes/dist/splitpanes.css" rel="stylesheet">
         @routes
         @vite(['resources/js/app.ts', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead

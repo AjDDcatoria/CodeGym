@@ -21,8 +21,10 @@
         "vue-tsc": "^2.0.24"
     },
     "dependencies": {
+        "@guolao/vue-monaco-editor": "^1.5.4",
         "@primevue/themes": "^4.2.5",
         "primeicons": "^7.0.0",
-        "primevue": "^4.2.5"
+        "primevue": "^4.2.5",
+        "splitpanes": "^3.1.5"
     }
 }
