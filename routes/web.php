@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('problems')->group(function() {
         Route::get('/', [ProblemController::class, 'index'])->name('problem.index');
+        Route::get('/create', [ProblemController::class, 'create'])->name('problem.create');
         Route::get('/{title}',[ProblemController::class, 'show'])->name('problem.show');
     });
 

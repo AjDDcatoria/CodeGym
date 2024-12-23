@@ -2,7 +2,6 @@
 import TopBarEditor from "@/Components/Editor/TopBarEditor.vue";
 import CodeEditor from "@/Components/Editor/CodeEditor.vue";
 import OutputTopbar from "@/Components/Editor/OutputTopbar.vue";
-import 'splitpanes/dist/splitpanes.css'
 import { Splitpanes, Pane } from 'splitpanes'
 
 </script>
@@ -33,6 +32,6 @@ import { Splitpanes, Pane } from 'splitpanes'
 .pane {
     background:var(--card-background);
     border-radius:0.5rem;
-    border-color: rgb(209 213 219 / 0.2);
+    border: 1px solid  rgb(209 213 219 / 0.2);
 }
 </style>

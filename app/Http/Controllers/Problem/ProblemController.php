@@ -25,7 +25,7 @@ class ProblemController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Problem/Partials/CreateProblem');
     }
 
     /**

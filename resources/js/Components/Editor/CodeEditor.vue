@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { VueMonacoEditor } from '@guolao/vue-monaco-editor'
 import { ref, shallowRef } from 'vue'
+import 'splitpanes/dist/splitpanes.css'
 
 const MONACO_EDITOR_OPTIONS = {
     automaticLayout: true,
